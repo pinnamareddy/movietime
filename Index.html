@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="tv.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>movies series</title>
+</head>
+
+<body>
+  <h1>search movies here</h1>
+  <input type="text" placeholder="search here" id="search">
+  <button id="search btn">search</button>
+
+
+  <table>
+    <tr>
+      <td><a href="www.google.com" target="blank"><img
+            src="http://static.tvmaze.com/uploads/images/original_untouched/282/705818.jpg" class="image"></a>
+        <h3 id="name">breaking bad (us)</h3>
+        <p >language:- <u id="language">English</u ></p>
+        <p>geners:- <u id="genl"> Drama,Comedy,Thriller</u></p>
+        
+        <p>country: -<u id="network">United States</u> </p>
+        <p>date: - <u id="dates">2008-01-20</u></p>
+        <p>run time: -<u id="time">60</u> minutes </p>
+      </td>
+    </tr>
+
+  </table>
+   <script>
+    const a = document.querySelector('a');
+    const button = document.querySelector("#search btn");
+    const input = document.querySelector("#search");
+    let html = '';
+
+    input.addEventListener('change', () => {
+        console.log(input.value);
+      const API_URL = `http://api.tvmaze.com/search/shows?q=${input.value}`
+      async function tv() {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        const url = data[0].show.image.original;
+        const date = data[0].show.premiered;
+        const language = data[0].show.language;
+        const name =  data[0].show.name;
+        const network = data[0].show.network.country.name;
+        const time = data[0].show.runtime;
+        document.querySelector("a").innerHTML = `<img src="${url}" class = "image">`
+        
+
+        const gn = data[0].show.genres;
+      
+        document.getElementById("genl").innerHTML = `${gn}`;
+       
+        console.log(data)
+
+        // for (let i = 0; i < gl; i++) {
+        //   gn[i] = data[0].show.genres[i];
+
+        //   document.getElementById("genl").innerHTML = `${gn[i]}`;
+        // }
+
+
+      
+        document.getElementById('dates').innerHTML = `${date}`;
+        document.getElementById('language').innerHTML = `${language}`;
+        document.getElementById('network').innerHTML = `${network}`;
+        document.getElementById('name').innerHTML = `${name}`;
+        document.getElementById('time').innerHTML = `${time}`;
+        // console.log(data[0].show)
+        //  console.log()
+        // console.log(data[0].show.name)
+        // console.log(data[0].show.officialSite)
+       
+        // console.log(data[0].show.rating.average)
+        // console.log(data[0].show.runtime)
+        // console.log(data[0].show.network.country.name) 
+      }
+      tv();
+      
+    });
+    
+    
+  </script>
+</body>
+
+</html>
